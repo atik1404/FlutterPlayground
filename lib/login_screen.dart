@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-
 class PasswordField extends StatefulWidget{
   const PasswordField({super.key});
 
@@ -23,6 +22,11 @@ class _LoginScreen extends State<PasswordField>{
           child: Column(
             children: [
               Image.asset("assets/images/img_login.jpg"),
+              const Text(
+                "Dev-1.0.0",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                 child: Align(
@@ -30,12 +34,15 @@ class _LoginScreen extends State<PasswordField>{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Mobile number",
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.grey
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                            "Mobile number",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.grey
+                            ),
+                          )
                       ),
                       TextField(
                         maxLines: 1,
@@ -44,6 +51,7 @@ class _LoginScreen extends State<PasswordField>{
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                             hintText: "Enter Mobile Number",
+                            counterText: "",
                             hintMaxLines: 1,
                             hintStyle: const TextStyle(
                                 color: Colors.grey,
@@ -60,11 +68,15 @@ class _LoginScreen extends State<PasswordField>{
                             )
                         ),
                       ),
-                      const Text(
-                        "Password",
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.grey
+                      const SizedBox(height: 15),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          "Password",
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.grey
+                          ),
                         ),
                       ),
                       TextField(
@@ -75,6 +87,7 @@ class _LoginScreen extends State<PasswordField>{
                         decoration: InputDecoration(
                             hintText: "Enter password",
                             hintMaxLines: 1,
+                            counterText: "",
                             hintStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 15.0
@@ -98,8 +111,10 @@ class _LoginScreen extends State<PasswordField>{
                           )
                         ),
                       ),
+                      const SizedBox(height: 35),
                       SizedBox(
                         width: double.infinity,
+                        height: 45,
                         child: ElevatedButton(
                             onPressed: (){},
                           style: ElevatedButton.styleFrom(
