@@ -1,14 +1,18 @@
-
+import 'package:MoviePlayground/assets/AppColors.dart';
+import 'package:MoviePlayground/assets/AppImagePath.dart';
 import 'package:flutter/material.dart';
 
-class PasswordField extends StatefulWidget{
+import 'assets/AppDimensions.dart';
+import 'assets/AppString.dart';
+
+class PasswordField extends StatefulWidget {
   const PasswordField({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<PasswordField>{
+class _LoginScreen extends State<PasswordField> {
   var _isVisible = true;
 
   @override
@@ -18,65 +22,78 @@ class _LoginScreen extends State<PasswordField>{
       body: Container(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: AppDimensions.kPadding10,
           child: Column(
             children: [
-              Image.asset("assets/images/img_login.jpg"),
+              Image.asset(AppImagePath.imgLoginLogo),
               const Text(
-                "Dev-1.0.0",
+                AppStrings.headingWelcome,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(
+                    fontSize: AppDimensions.extraLargeTextSize,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.mdRed400),
               ),
+              const Text(
+                AppStrings.headingBack,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontSize: AppDimensions.extraLargeTextSize,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black),
+              ),
+              const SizedBox(height: AppDimensions.margin10),
+              const Text(
+                AppStrings.msgSignIn,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: AppDimensions.smallTextSize,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.mdGrey400),
+              ),
+              const SizedBox(height: AppDimensions.margin10),
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                padding: AppDimensions.kPaddingH15,
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text(
-                            "Mobile number",
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            AppStrings.headerMobileNumber,
                             style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.grey
-                            ),
-                          )
-                      ),
+                                fontSize: AppDimensions.mediumTextSize,
+                                color: AppColors.mdGrey500),
+                          )),
                       TextField(
                         maxLines: 1,
                         maxLength: 11,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                            hintText: "Enter Mobile Number",
+                            hintText: AppStrings.hintMobileNumber,
                             counterText: "",
                             hintMaxLines: 1,
                             hintStyle: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15.0
-                            ),
+                                color: AppColors.mdGrey400,
+                                fontSize: AppDimensions.regularTextSize),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: AppColors.white,
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: AppDimensions.kRadius10,
                                 borderSide: const BorderSide(
-                                    width: 1.0,
-                                    color: Colors.lightBlueAccent
-                                )
-                            )
-                        ),
+                                    width: 1.0, color: AppColors.mdGrey100))),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: AppDimensions.margin15),
                       const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: EdgeInsets.symmetric(vertical: 5),
                         child: Text(
-                          "Password",
+                          AppStrings.headerPassword,
                           style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.grey
-                          ),
+                              fontSize: AppDimensions.mediumTextSize,
+                              color: AppColors.mdGrey500),
                         ),
                       ),
                       TextField(
@@ -85,46 +102,42 @@ class _LoginScreen extends State<PasswordField>{
                         obscureText: _isVisible,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
-                            hintText: "Enter password",
+                            hintText: AppStrings.hintPassword,
                             hintMaxLines: 1,
                             counterText: "",
                             hintStyle: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15.0
-                            ),
+                                color: AppColors.mdGrey400,
+                                fontSize: AppDimensions.regularTextSize),
                             fillColor: Colors.white,
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(
-                                    color: Colors.lightBlueAccent,
-                                    width: 1.0
-                                )
-                            ),
-                          suffixIcon: IconButton(
-                              onPressed: (){
-                                setState(() {
-                                  _isVisible = !_isVisible;
-                                });
-                              },
-                              icon: Icon(_isVisible ? Icons.visibility : Icons.visibility_off)
-                          )
-                        ),
+                                    width: 1.0, color: AppColors.mdGrey100)),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isVisible = !_isVisible;
+                                  });
+                                },
+                                icon: Icon(_isVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off))),
                       ),
                       const SizedBox(height: 35),
                       SizedBox(
                         width: double.infinity,
-                        height: 45,
-                        child: ElevatedButton(
-                            onPressed: (){},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red
-                          ),
-                            child: const Text("Login",
+                        height: AppDimensions.kSizeH45.height,
+                        child: FilledButton(
+                          onPressed: () {},
+                          style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.mdRed600),
+                          child: const Text(
+                            AppStrings.actionSignIn,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                            ),),
+                                color: AppColors.white,
+                                fontSize: AppDimensions.regularTextSize),
+                          ),
                         ),
                       )
                     ],
@@ -132,10 +145,27 @@ class _LoginScreen extends State<PasswordField>{
                 ),
               ),
               const Spacer(),
-              const Text(
-                "Dev-1.0.0",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppStrings.headingDontHaveAccount,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: AppDimensions.smallTextSize,
+                      color: AppColors.mdGrey500
+                    ),
+                  ),
+                  SizedBox(width: AppDimensions.margin5),
+                  Text(
+                    AppStrings.actionCreateAnAccount,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: AppDimensions.smallTextSize,
+                        color: AppColors.mdBlue800),
+                  )
+                ],
               )
             ],
           ),

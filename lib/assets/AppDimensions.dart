@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+
 class AppDimensions {
   // General Dimensions
   static const double zero = 0;
@@ -75,6 +77,43 @@ class AppDimensions {
   static const double largeTextSize = 16;
   static const double extraLargeTextSize = 18;
 
-  // Line Spacing
-  static const double lineSpace = 4;
+  // Empty widget
+  static const kEmptyWidget = SizedBox.shrink();
+
+  // Padding
+  static const kPadding0 = EdgeInsets.zero;
+  static const kPadding5 = EdgeInsets.all(5);
+  static const kPadding10 = EdgeInsets.all(10);
+  static const kPadding15 = EdgeInsets.all(15);
+  static const kPadding20 = EdgeInsets.all(20);
+  static const kPadding25 = EdgeInsets.all(25);
+  static const kPadding30 = EdgeInsets.all(30);
+  static const kPadding40 = EdgeInsets.all(40);
+  static const kPadding50 = EdgeInsets.all(50);
+
+  // Symmetric Padding
+  static const kPaddingH5 = EdgeInsets.symmetric(horizontal: 5);
+  static const kPaddingH10 = EdgeInsets.symmetric(horizontal: 10);
+  static const kPaddingH15 = EdgeInsets.symmetric(horizontal: 15);
+  static const kPaddingH20 = EdgeInsets.symmetric(horizontal: 20);
+  static const kPaddingH25 = EdgeInsets.symmetric(horizontal: 25);
+  static const kPaddingH30 = EdgeInsets.symmetric(horizontal: 30);
+  static const kPaddingH35 = EdgeInsets.symmetric(horizontal: 35);
+  static const kPaddingH40 = EdgeInsets.symmetric(horizontal: 40);
+  static const kPaddingH45 = EdgeInsets.symmetric(horizontal: 45);
+  static const kPaddingH50 = EdgeInsets.symmetric(horizontal: 50);
+  static const kPaddingH55 = EdgeInsets.symmetric(horizontal: 55);
+  static const kPaddingH60 = EdgeInsets.symmetric(horizontal: 60);
+
+  // Border Radius
+  static final kRadius0 = BorderRadius.circular(0);
+  static final kRadius10 = BorderRadius.circular(10);
+  static final kRadius15 = BorderRadius.circular(15);
+  static final kRadius20 = BorderRadius.circular(20);
+  static final kRadius30 = BorderRadius.circular(30);
+
+  // Size
+  static const kSizeH45 = Size(0, 45);
+  static const kSizeH50 = Size(0, 50);
+  static const kSizeH60 = Size(0, 60);
 }

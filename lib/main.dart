@@ -1,11 +1,11 @@
-import 'package:MoviePlayground/utils/AppColors.dart';
+import 'package:MoviePlayground/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await AppColors.load();
+void main(){
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await AppColors.load();
   runApp(const MyApp());
 }
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PasswordField(),
+      home: const HomeScreen(),
     );
   }
 }
