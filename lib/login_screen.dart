@@ -1,9 +1,10 @@
-import 'package:MoviePlayground/assets/AppColors.dart';
-import 'package:MoviePlayground/assets/AppImagePath.dart';
+import 'package:first_flutter/home_screen.dart';
+import 'package:first_flutter/resources/AppColors.dart';
+import 'package:first_flutter/resources/AppImagePath.dart';
 import 'package:flutter/material.dart';
 
-import 'assets/AppDimensions.dart';
-import 'assets/AppString.dart';
+import 'resources/AppDimensions.dart';
+import 'resources/AppString.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({super.key});
@@ -129,7 +130,12 @@ class _LoginScreen extends State<PasswordField> {
                         width: double.infinity,
                         height: AppDimensions.kSizeH45.height,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const HomeScreen()),
+                            );
+                          },
                           style: FilledButton.styleFrom(
                               backgroundColor: AppColors.mdRed600),
                           child: const Text(

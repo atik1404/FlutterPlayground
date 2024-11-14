@@ -1,7 +1,7 @@
 
 class AppImagePath{
-  static const imgLoginLogo = "lib/assets/images/img_login.jpg";
-  static const imgPlaceHolder = "lib/assets/images/img_placeholder.png";
+  static const imgLoginLogo = "assets/images/img_login.jpg";
+  static const imgPlaceHolder = "assets/images/img_placeholder.png";
 
   static const sliderImage = [
     "https://i.ytimg.com/vi/oFePCtMl7zI/sddefault.jpg?v=5c18d740",

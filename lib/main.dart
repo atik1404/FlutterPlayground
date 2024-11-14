@@ -1,4 +1,4 @@
-import 'package:MoviePlayground/home_screen.dart';
+import 'package:first_flutter/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const PasswordField(),
     );
   }
 }
