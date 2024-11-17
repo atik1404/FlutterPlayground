@@ -1,7 +1,7 @@
+import 'package:first_flutter/navigation/app_screens.dart';
 import 'package:flutter/material.dart';
 
 
-import '../home/home_screen.dart';
 import '../../resources/AppColors.dart';
 import '../../resources/AppDimensions.dart';
 import '../../resources/AppImagePath.dart';
@@ -134,10 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: AppDimensions.kSizeH45.height,
           child: FilledButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
+              Navigator.pushNamed(context, AppScreens.homeScreen);
             },
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.mdRed600,

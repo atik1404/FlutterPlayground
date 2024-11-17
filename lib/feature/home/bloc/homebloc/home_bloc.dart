@@ -13,10 +13,11 @@ class HomeBloc extends Bloc<HomeUiEvent, HomeUiState> {
     on<NextCarouselItem>(_onNextCarouselItem);
     on<PreviousCarouselItem>(_onPrevCarouselItem);
     on<SetCarouselPosition>(_setCurrentCarouselItemPosition);
+
+    add(FetchMovies());
   }
 
-  Future<void> _fetchMovies(
-      FetchMovies event, Emitter<HomeUiState> emit) async {
+  Future<void> _fetchMovies(FetchMovies event, Emitter<HomeUiState> emit) async {
     emit(state.copyWith(isLoading: true));
     await Future.delayed(const Duration(seconds: 3));
     var movies = getMovies();
@@ -25,11 +26,7 @@ class HomeBloc extends Bloc<HomeUiEvent, HomeUiState> {
   }
 
   void _onSelectCategory(SelectCategory event, Emitter<HomeUiState> emit) {
-    if (state.selectedCategory == event.position) {
-      emit(state.copyWith(selectedCategory: 0));
-    } else {
-      emit(state.copyWith(selectedCategory: event.position));
-    }
+    emit(state.copyWith(selectedCategory: event.position));
   }
 
   void _onNextCarouselItem(NextCarouselItem event, Emitter<HomeUiState> emit) {
@@ -41,8 +38,7 @@ class HomeBloc extends Bloc<HomeUiEvent, HomeUiState> {
     }
   }
 
-  void _onPrevCarouselItem(
-      PreviousCarouselItem event, Emitter<HomeUiState> emit) {
+  void _onPrevCarouselItem(PreviousCarouselItem event, Emitter<HomeUiState> emit) {
     if (state.currentCarouselItemPosition > 0) {
       emit(state.copyWith(
           currentCarouselItemPosition: state.currentCarouselItemPosition - 1));
@@ -51,8 +47,7 @@ class HomeBloc extends Bloc<HomeUiEvent, HomeUiState> {
     }
   }
 
-  void _setCurrentCarouselItemPosition(
-      SetCarouselPosition event, Emitter<HomeUiState> emit) {
+  void _setCurrentCarouselItemPosition(SetCarouselPosition event, Emitter<HomeUiState> emit) {
     emit(state.copyWith(currentCarouselItemPosition: event.position));
   }
 }

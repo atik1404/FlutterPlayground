@@ -1,9 +1,10 @@
-import 'package:first_flutter/feature/home/bloc/category/category_cubit.dart';
 import 'package:first_flutter/feature/home/home_screen.dart';
+import 'package:first_flutter/navigation/app_navigation.dart';
+import 'package:first_flutter/resources/AppImagePath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'feature/home/bloc/movie/movie_cubit.dart';
+import 'feature/home/bloc/homebloc/home_bloc.dart';
 
 
 void main(){
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final appNavigation = AppNavigation();
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -31,15 +33,7 @@ class MyApp extends StatelessWidget {
       //     ],
       //     child: ShoppingScreen()
       // ),
-      home: MultiBlocProvider(
-        providers: [
-          //create: (_)=>MovieCubit()
-          //BlocProvider(create: (_)=>HomeBloc(AppImagePath.sliderImage.length)),
-          BlocProvider(create: (_)=>MovieCubit()),
-          //BlocProvider(create: (_)=>CategoryCubit())
-        ],
-        child: const HomeScreen(),
-      ),
+      onGenerateRoute: appNavigation.onNavigationChange,
       debugShowCheckedModeBanner: false,
     );
   }

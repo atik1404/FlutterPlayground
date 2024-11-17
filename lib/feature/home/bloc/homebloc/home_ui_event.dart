@@ -3,7 +3,7 @@ abstract class HomeUiEvent {}
 class FetchMovies extends HomeUiEvent {}
 
 class SelectCategory extends HomeUiEvent {
-  final int position;
+  int position = 0;
 
   SelectCategory(this.position);
 }
