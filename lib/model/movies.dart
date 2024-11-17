@@ -13,7 +13,7 @@ List<MoviesEntity> getMovies() {
     MoviesEntity(
       'The Shawshank Redemption',
       '1',
-      '9.3',
+      '9.4',
       'https://image.tmdb.org/t/p/w500/qrwI2T844nrBUv3eDwQZRDdgSFs.jpg',
     ),
     MoviesEntity('Pulp Fiction', '2', '9.1',
