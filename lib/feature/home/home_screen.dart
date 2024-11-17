@@ -1,3 +1,5 @@
+import 'package:first_flutter/feature/home/bloc/carousel/carousel_cubit.dart';
+import 'package:first_flutter/feature/home/bloc/category/category_cubit.dart';
 import 'package:first_flutter/model/category.dart';
 import 'package:first_flutter/model/movies.dart';
 import 'package:first_flutter/resources/AppColors.dart';
@@ -10,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app_bar.dart';
 import '../../resources/AppString.dart';
-import 'bloc/movie_cubit.dart';
-import 'bloc/movie_state.dart';
+import 'bloc/movie/movie_cubit.dart';
+import 'bloc/movie/movie_state.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
@@ -27,15 +29,14 @@ class HomeScreen extends StatelessWidget{
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const MovieCarouselState(),
+          _movieCarousel(AppImagePath.sliderImage),
 
           const SizedBox(height: AppDimensions.margin10),
 
-          const Padding(
+          Padding(
               padding: AppDimensions.kPaddingH5,
-              child: MovieCategoryState()
+              child: _movieCategoryList(getCategoryList())
           ),
-
           const SizedBox(height: AppDimensions.margin10),
           BlocBuilder<MovieCubit, MovieState>(builder: (context, state) {
             return state.when(
@@ -49,6 +50,125 @@ class HomeScreen extends StatelessWidget{
         ],
       )
     );
+  }
+
+  Widget _movieCarousel(List<String> slideImages) {
+    return BlocProvider(
+      create: (context) => CarouselCubit(slideImages.length),
+      child: BlocBuilder<CarouselCubit, int>(
+        builder: (context, index) {
+          return Padding(
+              padding: AppDimensions.kPadding10,
+              child: Column(
+                children: [
+                  CarouselSlider(
+                    options: CarouselOptions(
+                        height: 180.0,
+                        autoPlay: true,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        autoPlayInterval: const Duration(seconds: 2),
+                        autoPlayCurve: Curves.easeInOutQuint,
+                        onPageChanged: (index, _) => {
+                          context.read<CarouselCubit>().setCurrentPosition(index)
+                        }),
+                    items: slideImages.map((image) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: ClipRRect(
+                              borderRadius: AppDimensions.kRadius10,
+                              child: Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                                width: 120,
+                                height: 120,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    AppImagePath.imgPlaceHolder,
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: AppDimensions.margin10),
+                  DotsIndicator(
+                    dotsCount: slideImages.length,
+                    position: index.toDouble(),
+                    decorator: DotsDecorator(
+                      activeShape: RoundedRectangleBorder(
+                          borderRadius: AppDimensions.kRadius10),
+                      spacing: AppDimensions.kPadding5,
+                      activeColor: AppColors.mdRed600,
+                      size: const Size(8, 8),
+                    ),
+                  ),
+                ],
+              ));
+        },
+      ),
+    );
+  }
+
+  Widget _movieCategoryList(List<Category> categories) {
+    return SizedBox(
+      height: 30,
+      child: BlocProvider(
+        create: (context)=> CategoryCubit(),
+        child: BlocBuilder<CategoryCubit,int>(
+          builder: (context, selectedItem){
+            return ListView.builder(
+              itemCount: categories.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index){
+                var category = categories[index];
+                bool isItemSelected = index == selectedItem;
+                return GestureDetector(
+                  onTap: () {
+                    context.read<CategoryCubit>().selectedItem(index);
+                    context.read<MovieCubit>().fetchMovie();
+                  },
+                  child: _movieCategoryItem(
+                      category: category, isItemSelected: isItemSelected),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _movieCategoryItem({required Category category, required bool isItemSelected}) {
+    return Container(
+        margin: AppDimensions.kPaddingH5,
+        decoration: BoxDecoration(
+            color: isItemSelected ? AppColors.mdRed400 : AppColors.white,
+            border:
+                Border.all(color: AppColors.mdRed100, width: AppDimensions.one),
+            borderRadius:
+                const BorderRadius.all(Radius.circular(AppDimensions.five))),
+        child: Padding(
+          padding: AppDimensions.kPaddingH20,
+          child: Center(
+            child: Text(
+              category.categoryName,
+              style: const TextStyle(
+                fontSize: AppDimensions.regularTextSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget _movieGrid(List<MoviesEntity> movies){
@@ -152,135 +272,6 @@ class HomeScreen extends StatelessWidget{
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MovieCarouselState extends StatefulWidget {
-  const MovieCarouselState({super.key});
-
-  @override
-  State<MovieCarouselState> createState() => _MovieCarousel();
-}
-
-class _MovieCarousel extends State<MovieCarouselState> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: AppDimensions.kPadding10,
-        child: Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                  height: 180.0,
-                  autoPlay: true,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  autoPlayInterval: const Duration(seconds: 2),
-                  autoPlayCurve: Curves.easeInOutQuint,
-                  onPageChanged: (index, _) => {
-                        setState(() {
-                          _currentIndex = index;
-                        })
-                      }),
-              items: AppImagePath.sliderImage.map((image) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: ClipRRect(
-                        borderRadius: AppDimensions.kRadius10,
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          width: 120,
-                          height: 120,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              AppImagePath.imgPlaceHolder,
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: AppDimensions.margin10),
-            DotsIndicator(
-              dotsCount: AppImagePath.sliderImage.length,
-              position: _currentIndex.toDouble(),
-              decorator: DotsDecorator(
-                activeShape: RoundedRectangleBorder(
-                    borderRadius: AppDimensions.kRadius10),
-                spacing: AppDimensions.kPadding5,
-                activeColor: AppColors.mdRed600,
-                size: const Size(8, 8),
-              ),
-            ),
-          ],
-        ));
-  }
-}
-
-class MovieCategoryState extends StatefulWidget {
-  const MovieCategoryState({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _MovieCategory();
-}
-
-class _MovieCategory extends State<MovieCategoryState> {
-  int? selectedIndex;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: getCategoryList().length,
-        itemBuilder: (BuildContext context, int index) {
-          var category = getCategoryList()[index];
-          bool isItemSelected = index == selectedIndex;
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedIndex = index;
-                debugPrint("item clicked: $isItemSelected $selectedIndex}");
-              });
-            },
-            child: Container(
-                margin: AppDimensions.kPaddingH5,
-                decoration: BoxDecoration(
-                    color:
-                        isItemSelected ? AppColors.mdRed400 : AppColors.white,
-                    border: Border.all(
-                        color: AppColors.mdRed100, width: AppDimensions.one),
-                    borderRadius: const BorderRadius.all(
-                        Radius.circular(AppDimensions.five))),
-                child: Padding(
-                  padding: AppDimensions.kPaddingH20,
-                  child: Center(
-                    child: Text(
-                      category.categoryName,
-                      style: const TextStyle(
-                        fontSize: AppDimensions.regularTextSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )),
-          );
-        },
       ),
     );
   }

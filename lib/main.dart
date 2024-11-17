@@ -1,11 +1,10 @@
-import 'package:equatable/equatable.dart';
-import 'package:first_flutter/feature/home/bloc/movie_cubit.dart';
+import 'package:first_flutter/feature/home/bloc/category/category_cubit.dart';
 import 'package:first_flutter/feature/home/home_screen.dart';
-import 'package:first_flutter/feature/playground/shopping_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'feature/login/login_screen.dart';
+import 'feature/home/bloc/movie/movie_cubit.dart';
+
 
 void main(){
   //WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +31,12 @@ class MyApp extends StatelessWidget {
       //     ],
       //     child: ShoppingScreen()
       // ),
-      home: BlocProvider(
-        create: (_)=>MovieCubit(),
+      home: MultiBlocProvider(
+        providers: [
+          //create: (_)=>MovieCubit()
+          BlocProvider(create: (_)=>MovieCubit()),
+          //BlocProvider(create: (_)=>CategoryCubit())
+        ],
         child: const HomeScreen(),
       ),
       debugShowCheckedModeBanner: false,
