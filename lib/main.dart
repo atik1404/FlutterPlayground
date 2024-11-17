@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           //create: (_)=>MovieCubit()
+          //BlocProvider(create: (_)=>HomeBloc(AppImagePath.sliderImage.length)),
           BlocProvider(create: (_)=>MovieCubit()),
           //BlocProvider(create: (_)=>CategoryCubit())
         ],
