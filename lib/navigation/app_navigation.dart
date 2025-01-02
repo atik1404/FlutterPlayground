@@ -1,5 +1,4 @@
 
-import 'package:first_flutter/component_playground.dart';
 import 'package:first_flutter/feature/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,11 +10,6 @@ import 'app_screens.dart';
 
 final class AppNavigation{
   Route onNavigationChange(RouteSettings routeSettings){
-
-    return MaterialPageRoute(
-        builder: (context)=> const ComponentPlaygroundScreen()
-    );
-
     final args = routeSettings.arguments;
 
     switch(routeSettings.name){
