@@ -1,24 +1,49 @@
-import 'package:first_flutter/feature/home/home_screen.dart';
+import 'dart:async';
+import 'package:first_flutter/logger.dart';
 import 'package:first_flutter/navigation/app_navigation.dart';
-import 'package:first_flutter/resources/AppImagePath.dart';
-import 'package:first_flutter/tab_bar_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:workmanager/workmanager.dart';
 
-import 'feature/home/bloc/homebloc/home_bloc.dart';
-import 'feature/login/login_screen.dart';
-import 'feature/playground/shopping_screen.dart';
+import 'feature/location/location_picker_screen.dart';
+import 'feature/location/location_service.dart';
 
-void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //await AppColors.load();
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    Logger.log("[WorkManager] Task executed at ${DateTime.now()}");
+    return Future.value(true);
+  });
+}
+
+void startRecursiveWorkManager() async {
+  while (true) {
+    await Future.delayed(const Duration(seconds: 5));
+
+    Workmanager().registerOneOffTask(
+      "recurringTask_${DateTime.now().millisecondsSinceEpoch}", // Unique task name
+      "fetchData",
+    );
+
+    Logger.log("[WorkManager] Scheduled a new task at ${DateTime.now()}");
+    LocationService.locationStream.listen((position) {
+      Logger.log("Updated location: ${position?.latitude}, ${position?.longitude}");
+    });
+  }
+}
+
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocationService.getCurrentLocation();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  startRecursiveWorkManager();
+  //await LocationService.getCurrentLocation();
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final appNavigation = AppNavigation();
@@ -27,23 +52,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const TabBarScreen(),
-      // home: MultiBlocProvider(providers: [
-      //   BlocProvider(
-      //     create: (_) => CartCubit(),
-      //   ),
-      //   BlocProvider(
-      //     create: (context) => CheckoutCubit(context.read<CartCubit>()),
-      //   ),
-      // ], child: ShoppingScreen()),
+      home: const LocationPickerScreen(),
       onGenerateRoute: appNavigation.onNavigationChange,
       debugShowCheckedModeBanner: false,
     );
   }
-}
-
-class Person {
-  final String name;
-
-  Person({required this.name});
 }

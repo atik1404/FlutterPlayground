@@ -42,3 +42,9 @@ android {
 flutter {
     source = "../.."
 }
+
+//dependencies {
+//    implementation 'com.transistorsoft:tsbackgroundfetch:4.0.2'
+//    implementation 'com.transistorsoft:tslocationmanager:4.16.6'
+//}
+

@@ -1,26 +1,27 @@
 import 'package:first_flutter/navigation/app_screens.dart';
+import 'package:first_flutter/resources/AppColors.dart';
+import 'package:first_flutter/resources/AppDimensions.dart';
+import 'package:first_flutter/resources/AppImagePath.dart';
+import 'package:first_flutter/resources/AppString.dart';
 import 'package:flutter/material.dart';
 
-
-import '../../resources/AppColors.dart';
-import '../../resources/AppDimensions.dart';
-import '../../resources/AppImagePath.dart';
-import '../../resources/AppString.dart';
-
+/// A good thing.
 class LoginScreen extends StatefulWidget {
+  /// Start doing your thing.
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+/// A good thing.
+class LoginScreenState extends State<LoginScreen> {
   bool _isVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;//screen height
-    var imageHeight = screenHeight * .3;//image height is 30% of the screen height
+    var screenHeight = MediaQuery.of(context).size.height;//screen height
+    final imageHeight = screenHeight * .3;//image height is 30% of the screen height
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Image.asset(
               height: imageHeight,
-                AppImagePath.imgLoginLogo
+                AppImagePath.imgLoginLogo,
             ),
             const _HeadingText(
               text: AppStrings.headingWelcome,
@@ -51,6 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
             const Spacer(),
 
             const _FooterText(),
+
+            ElevatedButton(onPressed: (){
+              screenHeight = 5.0;
+            }, child: Text("data")),
           ],
         ),
       ),
@@ -106,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: obscureText ? TextInputAction.done : TextInputAction.next,
       decoration: InputDecoration(
         hintText: hintText,
-        counterText: "",
+        counterText: '',
         hintStyle: const TextStyle(
           color: AppColors.mdGrey400,
           fontSize: AppDimensions.regularTextSize,
