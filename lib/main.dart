@@ -1,10 +1,9 @@
 import 'dart:async';
+import 'package:first_flutter/feature/login/login_screen.dart';
 import 'package:first_flutter/logger.dart';
 import 'package:first_flutter/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:workmanager/workmanager.dart';
-
-import 'feature/location/location_picker_screen.dart';
 import 'feature/location/location_service.dart';
 
 void callbackDispatcher() {
@@ -32,11 +31,11 @@ void startRecursiveWorkManager() async {
 
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await LocationService.getCurrentLocation();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  startRecursiveWorkManager();
-  //await LocationService.getCurrentLocation();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await LocationService.getCurrentLocation();
+  // Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  // startRecursiveWorkManager();
+  // await LocationService.getCurrentLocation();
   runApp(const MyApp());
 }
 
@@ -52,7 +51,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LocationPickerScreen(),
+      home: const LoginScreen(),
       onGenerateRoute: appNavigation.onNavigationChange,
       debugShowCheckedModeBanner: false,
     );
