@@ -1,6 +1,9 @@
 import 'package:first_flutter/feature/login/login_screen.dart';
+import 'package:first_flutter/feature/notification/notification_services.dart';
 import 'package:first_flutter/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
+
+import 'feature/notification/notification_screen.dart';
 
 // void callbackDispatcher() {
 //   Workmanager().executeTask((task, inputData) async {
@@ -32,6 +35,8 @@ void main() async{
   // Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   // startRecursiveWorkManager();
   // await LocationService.getCurrentLocation();
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initialize();
   runApp(const MyApp());
 }
 
@@ -47,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const NotificationScreen(),
       onGenerateRoute: appNavigation.onNavigationChange,
       debugShowCheckedModeBanner: false,
     );
