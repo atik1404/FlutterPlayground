@@ -3,6 +3,7 @@ import 'package:first_flutter/feature/notification/notification_services.dart';
 import 'package:first_flutter/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 
+import 'feature/notification/notification_repository.dart';
 import 'feature/notification/notification_screen.dart';
 
 // void callbackDispatcher() {
@@ -36,7 +37,7 @@ void main() async{
   // startRecursiveWorkManager();
   // await LocationService.getCurrentLocation();
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.initialize();
+  await NotificationRepository.initialization();
   runApp(const MyApp());
 }
 

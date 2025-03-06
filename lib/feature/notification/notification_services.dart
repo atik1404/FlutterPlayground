@@ -6,7 +6,6 @@ import 'package:timezone/data/latest_all.dart' as tz;
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
-
   static Future<void> initialize() async{
     const AndroidInitializationSettings androidInitializationSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
