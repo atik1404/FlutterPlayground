@@ -1,7 +1,8 @@
+
 import 'package:first_flutter/logger.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -18,7 +19,6 @@ class NotificationRepository {
 
   static Future<void> initialization() async {
     tz.initializeTimeZones();
-    final String currentTimeZone = DateTime.now().timeZoneName;
     final location = tz.getLocation('Asia/Dhaka'); // Correct timezone name
     tz.setLocalLocation(location);
 
@@ -139,5 +139,79 @@ class NotificationRepository {
     }catch(e){
       Logger.log("Exception: $e}");
     }
+  }
+
+  Future<void> dailyNotification({String title = "this is title", String body = "this is body", int hour = 11, int minute = 42}) async{
+    await _notificationsPlugin.zonedSchedule(
+      0,
+      title,
+      body,
+      _nextInstanceOfTime(hour, minute),
+        _notificationDetails(),
+      matchDateTimeComponents: DateTimeComponents.time,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.inexact
+    );
+  }
+
+  static tz.TZDateTime _nextInstanceOfTime(int hour, int minute, { int day = 1}) {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(Duration(days: day));
+    }
+
+    return scheduledDate;
+  }
+
+  Future<void> weeklyNotification({String title = "this is title", String body = "this is body", int hour = 11, int minute = 34}) async{
+    await _notificationsPlugin.zonedSchedule(
+        0,
+        title,
+        body,
+        _nextInstanceOfTime(hour, minute, day: 7),
+        _notificationDetails(),
+        matchDateTimeComponents: DateTimeComponents.time,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        androidScheduleMode: AndroidScheduleMode.alarmClock
+    );
+  }
+
+  Future<void> notificationWithImage({String title = "this is title", String body = "this is body", String imageUrl = ""}) async{
+    BigPictureStyleInformation? bigPictureStyleInformation;
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        final byteArray = response.bodyBytes;
+        bigPictureStyleInformation = BigPictureStyleInformation(
+          ByteArrayAndroidBitmap(byteArray),
+          largeIcon: ByteArrayAndroidBitmap(byteArray),
+          contentTitle: title,
+          summaryText: body,
+        );
+      }
+    } catch (e) {
+
+    }
+    var notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+            DateTime.now().millisecondsSinceEpoch.toString(), channel.name,
+            channelDescription: channel.description,
+            styleInformation: bigPictureStyleInformation,
+            importance: Importance.high,
+            color: Colors.blue,
+            playSound: true,
+            icon: '@mipmap/ic_launcher',
+            showWhen: false
+        ),
+        iOS: const DarwinNotificationDetails(
+            presentSound: true,
+            presentAlert: true,
+            presentBadge: true
+        )
+    );
+
+    await _notificationsPlugin.show(0, title, body, notificationDetails);
   }
 }

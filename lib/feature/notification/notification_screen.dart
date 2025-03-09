@@ -1,5 +1,6 @@
 import 'package:first_flutter/feature/notification/notification_services.dart';
 import 'package:first_flutter/logger.dart';
+import 'package:first_flutter/resources/AppImagePath.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -53,19 +54,31 @@ class NotificationScreen extends StatelessWidget {
 
             _buildNotificationButton(context, "Daily at specific time", () {
               Fluttertoast.showToast(msg: "Daily at specific time notification", toastLength: Toast.LENGTH_LONG);
+              NotificationRepository().intervalNotification(
+                  title: "Daily notification",
+                  body: "This is daily notification in every day"
+              );
             }),
 
             const SizedBox(height: AppDimensions.margin15),
 
             _buildNotificationButton(context, "Weekly at specific time", () {
-              Logger.log("Weekly at specific time notification");
               Fluttertoast.showToast(msg: "Weekly at specific time notification", toastLength: Toast.LENGTH_LONG);
+              NotificationRepository().intervalNotification(
+                  title: "Weekly notification",
+                  body: "This is weekly notification in every week"
+              );
             }),
 
             const SizedBox(height: AppDimensions.margin15),
 
             _buildNotificationButton(context, "Notification with Image", () {
               Fluttertoast.showToast(msg: "Notification with Image notification", toastLength: Toast.LENGTH_LONG);
+              NotificationRepository().notificationWithImage(
+                  title: "Image notification",
+                  body: "This is image notification",
+                  imageUrl: "https://media.architecturaldigest.com/photos/66a914f1a958d12e0cc94a8e/16:9/w_1920,c_limit/DSC_5903.jpg"
+              );
             })
           ],
         ),
