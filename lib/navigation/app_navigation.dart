@@ -5,8 +5,6 @@ import 'app_screens.dart';
 
 final class AppNavigation{
   Route onNavigationChange(RouteSettings routeSettings){
-    final args = routeSettings.arguments;
-
     switch(routeSettings.name){
       case AppScreens.loginScreen:
         return MaterialPageRoute(builder: (BuildContext context) => const LoginScreen());

@@ -114,26 +114,26 @@ class _TabBarScreenState extends State<TabBarScreen> with SingleTickerProviderSt
     );
   }
 
-  Widget _buildTab(String label, IconData icon) {
-    return Tab(
-      height: 100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 24),
-          const SizedBox(height: 5),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 14),
-          ),
-          const Text(
-            "4500-50000",
-            style: TextStyle(fontSize: 8),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildTab(String label, IconData icon) {
+  //   return Tab(
+  //     height: 100,
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 24),
+  //         const SizedBox(height: 5),
+  //         Text(
+  //           label,
+  //           style: const TextStyle(fontSize: 14),
+  //         ),
+  //         const Text(
+  //           "4500-50000",
+  //           style: TextStyle(fontSize: 8),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
 // Custom MultiIndicator
