@@ -1,8 +1,8 @@
-import 'package:first_flutter/feature/playground/bloc_playground_screen.dart';
+import 'package:first_flutter/feature/playground/chip/chip_component_playground.dart';
 import 'package:first_flutter/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 
-void main() async{
+void main() async {
   runApp(const MyApp());
 }
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const BlocPlaygroundScreen(),
+      home: const ChipComponentPlayground(),
       onGenerateRoute: appNavigation.onNavigationChange,
       debugShowCheckedModeBanner: false,
     );
